@@ -1,0 +1,28 @@
+version: "3"
+services:
+  mysql:
+    container_name: "mysql"
+    volumes:
+      - ./sql-data/:/docker-entrypoint-initdb.d
+      - sql-data-volume:/var/lib/mysql
+    image: "mysql:5.7.24"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "root"
+      MYSQL_DATABASE: "classicmodels"
+    ports:
+      - "3306:3306"
+    restart: always
+  web:
+    container_name: "web-server"
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/www/mysqltypeorm
+    depends_on:
+      - mysql
+    restart: always
+volumes:
+  sql-data-volume:
