@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from "typeorm";
+import {createConnection, getConnection} from 'typeorm';
 import {
   customers,
   employees,
@@ -7,22 +7,23 @@ import {
   orders,
   payments,
   productlines,
-  products
-} from "../entities";
-import { Logger } from "../share/logger";
+  products,
+} from '../entities';
+import {Logger} from '../share/logger';
 
-const log = new Logger("connection:mysql-db");
-log.info("mysql-db connection initialize");
+const log = new Logger('connection:mysql-db');
+log.info('mysql-db connection initialize');
 
-(async () => {
-  try {
-    await createConnection({
-      type: "mysql",
-      host: "mysql",
+class DbConnection {
+  public connect = () => {
+		console.log('inside connect');
+    return createConnection({
+      type: 'mysql',
+      host: 'mysql',
       port: 3306,
-      username: "root",
-      password: "",
-      database: "classicmodels",
+      username: 'root',
+      password: '',
+      database: 'classicmodels',
       synchronize: true,
       logging: true,
       entities: [
@@ -33,12 +34,10 @@ log.info("mysql-db connection initialize");
         orders,
         payments,
         productlines,
-        products
-      ]
+        products,
+      ],
     });
-  } catch (err) {
-    log.error("Error in creating connection", err);
-  }
-})();
+  };
+}
 
-export const connection = getConnection();
+export const connection = new DbConnection();

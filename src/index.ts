@@ -1,12 +1,22 @@
-import * as express from "express";
-import "./connection/mysql-db";
-import { router } from "./handlers";
+import * as express from 'express';
+import {connection} from './connection/mysql-db';
+import {router} from './handlers';
 
-const app = express();
-const port = 8080;
+const init = async () => {
+  const app = express();
+  const port = 8080;
 
-app.use("/", router);
+  console.log('port is', port);
 
-app.listen(port, () => {
-  console.log(`server started at port ${port}`);
-});
+  const conn = await connection.connect();
+
+  console.log('conn', conn);
+
+  app.use('/', router);
+
+  app.listen(port, () => {
+    console.log(`server started at port ${port}`);
+  });
+};
+
+init();

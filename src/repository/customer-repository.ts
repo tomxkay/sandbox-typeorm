@@ -23,6 +23,10 @@ export class CustomerRepository extends BaseRepository<
     }
     return query.getMany();
   }
+  public test() {
+    const query = customers.createQueryBuilder("customer").limit(2);
+    return query.getMany();
+  }
 }
 
 export const customerRepository = new CustomerRepository(customers, "customer");

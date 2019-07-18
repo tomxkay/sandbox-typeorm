@@ -4,7 +4,7 @@ import { employeeRouter } from "./employee";
 export const router = Router();
 
 router.get("/", (req, res) => {
-  res.send("customer handler /");
+  res.send("customer handler / route -------");
 });
 router.use("/customer", customerRouter);
 router.use("/employee", employeeRouter);

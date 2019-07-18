@@ -6,11 +6,12 @@ export const customerRouter = Router();
 const log = new Logger("customer-handler initialized");
 
 customerRouter.get("/", async (req, res) => {
-  res.send("server heard route /");
+  res.send("server heard route / -----");
 });
 
 customerRouter.get("/test", async (req, res) => {
-  res.send("server heard route /");
+  const response = await customerRepository.test();
+  return res.send(JSON.stringify(response));
 });
 
 customerRouter.get("/getmany/:count", async (req: Request, res: Response) => {
